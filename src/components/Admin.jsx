@@ -1,94 +1,149 @@
-// src/components/Admin.jsx
-import React, { useState } from "react";
-import "./Admin.css";
-import Header from "./Header";
+import React, { useEffect, useState, useCallback } from "react";
+
+const citiesOfTurkey = [
+  "Adana", "Adıyaman", "Afyonkarahisar", "Ağrı", "Amasya", "Ankara", "Antalya", "Artvin", "Aydın", "Balıkesir",
+  "Bilecik", "Bingöl", "Bitlis", "Bolu", "Burdur", "Bursa", "Çanakkale", "Çankırı", "Çorum", "Denizli",
+  "Diyarbakır", "Edirne", "Elazığ", "Erzincan", "Erzurum", "Eskişehir", "Gaziantep", "Giresun", "Gümüşhane", "Hakkari",
+  "Hatay", "Isparta", "Mersin", "İstanbul", "İzmir", "Kars", "Kastamonu", "Kayseri", "Kırklareli", "Kırşehir",
+  "Kocaeli", "Konya", "Kütahya", "Malatya", "Manisa", "Kahramanmaraş", "Mardin", "Muğla", "Muş", "Nevşehir",
+  "Niğde", "Ordu", "Rize", "Sakarya", "Samsun", "Siirt", "Sinop", "Sivas", "Tekirdağ", "Tokat",
+  "Trabzon", "Tunceli", "Şanlıurfa", "Uşak", "Van", "Yozgat", "Zonguldak", "Aksaray", "Bayburt", "Karaman",
+  "Kırıkkale", "Batman", "Şırnak", "Bartın", "Ardahan", "Iğdır", "Yalova", "Karabük", "Kilis", "Osmaniye",
+  "Düzce"
+];
 
 const Admin = () => {
-  const [users, setUsers] = useState([
-    { id: 1, name: "Deniz Demir", email: "deniz@example.com" },
-    { id: 2, name: "Güneş Yaz", email: "gunes@example.com" },
-  ]);
+  const [stations, setStations] = useState([]);
+  const [form, setForm] = useState({ name: "", city: "" });
+  const [loading, setLoading] = useState(false);
+  const token = localStorage.getItem("token");
 
-  const [tickets, setTickets] = useState([
-    { id: 1, passengerName: "John Doe", train: "Express 101" },
-    { id: 2, passengerName: "Jane Smith", train: "Express 102" },
-  ]);
+  const fetchStations = useCallback(async () => {
+    setLoading(true);
+    try {
+      const res = await fetch("http://localhost:8080/stations/", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
+      const data = await res.json();
+      setStations(Array.isArray(data) ? data : []);
+    } catch (err) {
+      console.error("İstasyon verisi alınamadı:", err);
+      setStations([]);
+    } finally {
+      setLoading(false);
+    }
+  }, [token]);
 
-  const [trains, setTrains] = useState([
-    { id: 1, name: "Express 101", route: "Ankara - Istanbul", price: 150 },
-    { id: 2, name: "Express 102", route: "Istanbul - Izmir", price: 120 },
-  ]);
+  useEffect(() => {
+    fetchStations();
+  }, [fetchStations]);
+
+  const addStation = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await fetch("http://localhost:8080/stations", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(form),
+      });
+
+      if (!res.ok) throw new Error("İstasyon eklenemedi");
+
+      setForm({ name: "", city: "" });
+      fetchStations();
+    } catch (err) {
+      console.error("İstasyon ekleme hatası:", err);
+    }
+  };
+
+  const deleteStation = async (id) => {
+    try {
+      const res = await fetch(`http://localhost:8080/stations/${id}`, {
+        method: "DELETE",
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
+      if (!res.ok) throw new Error("İstasyon silinemedi");
+
+      fetchStations();
+    } catch (err) {
+      console.error("Silme hatası:", err);
+    }
+  };
 
   return (
-    <div>
-      {/* Header ile admin linkleri dropdown’da */}
-      <Header />
+    <div className="max-w-5xl mx-auto px-4 py-8">
+      <h1 className="text-3xl font-bold text-center mb-8">Station Management</h1>
 
-      <div className="admin-container">
-        <h1>Welcome, Admin!</h1>
+      <form onSubmit={addStation} className="bg-white shadow-md rounded-lg p-6 mb-8 space-y-4">
+        <input
+          type="text"
+          placeholder="Station Name"
+          value={form.name}
+          onChange={(e) => setForm({ ...form, name: e.target.value })}
+          className="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring focus:border-blue-500"
+          required
+        />
+        <select
+          value={form.city}
+          onChange={(e) => setForm({ ...form, city: e.target.value })}
+          className="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring focus:border-blue-500"
+          required
+        >
+          <option value="">Select City</option>
+          {citiesOfTurkey.map((city, index) => (
+            <option key={index} value={city}>{city}</option>
+          ))}
+        </select>
+        <button
+          type="submit"
+          className="w-full bg-blue-600 text-white font-semibold py-2 rounded hover:bg-blue-700"
+        >
+          Add Station
+        </button>
+      </form>
 
-        <h2>Users</h2>
-        <table>
-          <thead>
-            <tr>
-              <th>User ID</th>
-              <th>Name</th>
-              <th>Email</th>
-            </tr>
-          </thead>
-          <tbody>
-            {users.map((u) => (
-              <tr key={u.id}>
-                <td>{u.id}</td>
-                <td>{u.name}</td>
-                <td>{u.email}</td>
+      {loading ? (
+        <p className="text-center text-gray-600">Loading stations...</p>
+      ) : stations.length === 0 ? (
+        <p className="text-center text-gray-400">No stations available.</p>
+      ) : (
+        <div className="overflow-x-auto">
+          <table className="min-w-full table-auto border border-gray-200 shadow-sm rounded">
+            <thead className="bg-gray-100 text-left">
+              <tr>
+                <th className="p-3 border">ID</th>
+                <th className="p-3 border">Name</th>
+                <th className="p-3 border">City</th>
+                <th className="p-3 border text-center">Actions</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
-
-        <h2>Tickets</h2>
-        <table>
-          <thead>
-            <tr>
-              <th>Ticket ID</th>
-              <th>Passenger Name</th>
-              <th>Train</th>
-            </tr>
-          </thead>
-          <tbody>
-            {tickets.map((t) => (
-              <tr key={t.id}>
-                <td>{t.id}</td>
-                <td>{t.passengerName}</td>
-                <td>{t.train}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-
-        <h2>Trains</h2>
-        <table>
-          <thead>
-            <tr>
-              <th>Train ID</th>
-              <th>Train Name</th>
-              <th>Route</th>
-              <th>Price</th>
-            </tr>
-          </thead>
-          <tbody>
-            {trains.map((tr) => (
-              <tr key={tr.id}>
-                <td>{tr.id}</td>
-                <td>{tr.name}</td>
-                <td>{tr.route}</td>
-                <td>{tr.price}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+            </thead>
+            <tbody>
+              {stations.map((station) => (
+                <tr key={station.id} className="hover:bg-gray-50">
+                  <td className="p-3 border">{station.id}</td>
+                  <td className="p-3 border">{station.name}</td>
+                  <td className="p-3 border">{station.city}</td>
+                  <td className="p-3 border text-center">
+                    <button
+                      onClick={() => deleteStation(station.id)}
+                      className="text-red-500 hover:underline font-medium"
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
     </div>
   );
 };
