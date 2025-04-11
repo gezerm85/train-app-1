@@ -36,10 +36,10 @@ const AppContent = () => {
         case "ADMIN":
           navigate("/admin");
           break;
-        case "user":
+        case "USER":
           navigate("/user");
           break;
-     
+    
         default:
           navigate("/user");
       }
