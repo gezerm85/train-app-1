@@ -1,151 +1,229 @@
 import React, { useEffect, useState, useCallback } from "react";
 
-const citiesOfTurkey = [
-  "Adana", "Adıyaman", "Afyonkarahisar", "Ağrı", "Amasya", "Ankara", "Antalya", "Artvin", "Aydın", "Balıkesir",
-  "Bilecik", "Bingöl", "Bitlis", "Bolu", "Burdur", "Bursa", "Çanakkale", "Çankırı", "Çorum", "Denizli",
-  "Diyarbakır", "Edirne", "Elazığ", "Erzincan", "Erzurum", "Eskişehir", "Gaziantep", "Giresun", "Gümüşhane", "Hakkari",
-  "Hatay", "Isparta", "Mersin", "İstanbul", "İzmir", "Kars", "Kastamonu", "Kayseri", "Kırklareli", "Kırşehir",
-  "Kocaeli", "Konya", "Kütahya", "Malatya", "Manisa", "Kahramanmaraş", "Mardin", "Muğla", "Muş", "Nevşehir",
-  "Niğde", "Ordu", "Rize", "Sakarya", "Samsun", "Siirt", "Sinop", "Sivas", "Tekirdağ", "Tokat",
-  "Trabzon", "Tunceli", "Şanlıurfa", "Uşak", "Van", "Yozgat", "Zonguldak", "Aksaray", "Bayburt", "Karaman",
-  "Kırıkkale", "Batman", "Şırnak", "Bartın", "Ardahan", "Iğdır", "Yalova", "Karabük", "Kilis", "Osmaniye",
-  "Düzce"
-];
-
-const Admin = () => {
+const AdminPanel = () => {
   const [stations, setStations] = useState([]);
-  const [form, setForm] = useState({ name: "", city: "" });
-  const [loading, setLoading] = useState(false);
+  const [trips, setTrips] = useState([]);
+  const [employees, setEmployees] = useState([]);
+  const [trains, setTrains] = useState([]);
+
+  const [stationForm, setStationForm] = useState({ name: "", city: "" });
+  const [tripForm, setTripForm] = useState({
+    trainId: 0,
+    departureStationId: 0,
+    arrivalStationId: 0,
+    departureTime: "",
+    arrivalTime: "",
+    price: 0,
+  });
+  const [employeeForm, setEmployeeForm] = useState({
+    firstName: "",
+    lastName: "",
+    age: 0,
+    gender: "MALE",
+    phoneNumber: "",
+    address: "",
+  });
+
   const token = localStorage.getItem("token");
 
-  const fetchStations = useCallback(async () => {
-    setLoading(true);
+  const fetchData = useCallback(async () => {
     try {
-      const res = await fetch("http://localhost:8080/stations/", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-      });
-      const data = await res.json();
-      setStations(Array.isArray(data) ? data : []);
+      const [stationRes, tripRes, employeeRes, trainRes] = await Promise.all([
+        fetch("http://localhost:8080/stations/", {
+          headers: { Authorization: `Bearer ${token}` },
+        }),
+        fetch("http://localhost:8080/trips/", {
+          headers: { Authorization: `Bearer ${token}` },
+        }),
+        fetch("http://localhost:8080/employees/", {
+          headers: { Authorization: `Bearer ${token}` },
+        }),
+        fetch("http://localhost:8080/trains/", {
+          headers: { Authorization: `Bearer ${token}` },
+        }),
+      ]);
+
+      const [stationData, tripData, employeeData, trainData] = await Promise.all([
+        stationRes.json(),
+        tripRes.json(),
+        employeeRes.json(),
+        trainRes.json(),
+      ]);
+
+      setStations(Array.isArray(stationData) ? stationData : []);
+      setTrips(Array.isArray(tripData) ? tripData : []);
+      setEmployees(Array.isArray(employeeData) ? employeeData : []);
+      setTrains(Array.isArray(trainData) ? trainData : []);
     } catch (err) {
-      console.error("İstasyon verisi alınamadı:", err);
-      setStations([]);
-    } finally {
-      setLoading(false);
+      console.error("Fetch error:", err);
     }
   }, [token]);
 
   useEffect(() => {
-    fetchStations();
-  }, [fetchStations]);
+    fetchData();
+  }, [fetchData]);
 
-  const addStation = async (e) => {
-    e.preventDefault();
+  const postData = async (url, data, resetForm) => {
     try {
-      const res = await fetch("http://localhost:8080/stations", {
+      const res = await fetch(url, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify(form),
+        body: JSON.stringify(data),
       });
-
-      if (!res.ok) throw new Error("İstasyon eklenemedi");
-
-      setForm({ name: "", city: "" });
-      fetchStations();
+      if (!res.ok) throw new Error("Error posting data");
+      resetForm();
+      fetchData();
     } catch (err) {
-      console.error("İstasyon ekleme hatası:", err);
+      console.error(err);
     }
   };
 
-  const deleteStation = async (id) => {
+  const deleteData = async (url) => {
     try {
-      const res = await fetch(`http://localhost:8080/stations/${id}`, {
+      const res = await fetch(url, {
         method: "DELETE",
         headers: { Authorization: `Bearer ${token}` },
       });
-
-      if (!res.ok) throw new Error("İstasyon silinemedi");
-
-      fetchStations();
+      if (!res.ok) throw new Error("Error deleting data");
+      fetchData();
     } catch (err) {
-      console.error("Silme hatası:", err);
+      console.error(err);
     }
   };
 
   return (
-    <div className="max-w-5xl mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold text-center mb-8">Station Management</h1>
-
-      <form onSubmit={addStation} className="bg-white shadow-md rounded-lg p-6 mb-8 space-y-4">
-        <input
-          type="text"
-          placeholder="Station Name"
-          value={form.name}
-          onChange={(e) => setForm({ ...form, name: e.target.value })}
-          className="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring focus:border-blue-500"
-          required
+    <div className="p-10 space-y-12">
+      <Section title="Stations">
+        <Form
+          inputs={[
+            {
+              value: stationForm.name,
+              onChange: (e) => setStationForm({ ...stationForm, name: e.target.value }),
+              placeholder: "Station Name",
+            },
+            {
+              value: stationForm.city,
+              onChange: (e) => setStationForm({ ...stationForm, city: e.target.value }),
+              placeholder: "City",
+            },
+          ]}
+          onSubmit={() => postData("http://localhost:8080/stations/", stationForm, () => setStationForm({ name: "", city: "" }))}
         />
-        <select
-          value={form.city}
-          onChange={(e) => setForm({ ...form, city: e.target.value })}
-          className="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring focus:border-blue-500"
-          required
-        >
-          <option value="">Select City</option>
-          {citiesOfTurkey.map((city, index) => (
-            <option key={index} value={city}>{city}</option>
-          ))}
-        </select>
-        <button
-          type="submit"
-          className="w-full bg-blue-600 text-white font-semibold py-2 rounded hover:bg-blue-700"
-        >
-          Add Station
-        </button>
-      </form>
+        <Table data={stations} onDelete={(id) => deleteData(`http://localhost:8080/stations/${id}`)} />
+      </Section>
 
-      {loading ? (
-        <p className="text-center text-gray-600">Loading stations...</p>
-      ) : stations.length === 0 ? (
-        <p className="text-center text-gray-400">No stations available.</p>
-      ) : (
-        <div className="overflow-x-auto">
-          <table className="min-w-full table-auto border border-gray-200 shadow-sm rounded">
-            <thead className="bg-gray-100 text-left">
-              <tr>
-                <th className="p-3 border">ID</th>
-                <th className="p-3 border">Name</th>
-                <th className="p-3 border">City</th>
-                <th className="p-3 border text-center">Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {stations.map((station) => (
-                <tr key={station.id} className="hover:bg-gray-50">
-                  <td className="p-3 border">{station.id}</td>
-                  <td className="p-3 border">{station.name}</td>
-                  <td className="p-3 border">{station.city}</td>
-                  <td className="p-3 border text-center">
-                    <button
-                      onClick={() => deleteStation(station.id)}
-                      className="text-red-500 hover:underline font-medium"
-                    >
-                      Delete
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      )}
+      <Section title="Trips">
+        <Form
+          inputs={[
+            { value: tripForm.trainId, onChange: (e) => setTripForm({ ...tripForm, trainId: Number(e.target.value) }), placeholder: "Train ID" },
+            { value: tripForm.departureStationId, onChange: (e) => setTripForm({ ...tripForm, departureStationId: Number(e.target.value) }), placeholder: "Departure Station ID" },
+            { value: tripForm.arrivalStationId, onChange: (e) => setTripForm({ ...tripForm, arrivalStationId: Number(e.target.value) }), placeholder: "Arrival Station ID" },
+            { value: tripForm.departureTime, onChange: (e) => setTripForm({ ...tripForm, departureTime: e.target.value }), placeholder: "Departure Time" },
+            { value: tripForm.arrivalTime, onChange: (e) => setTripForm({ ...tripForm, arrivalTime: e.target.value }), placeholder: "Arrival Time" },
+            { value: tripForm.price, onChange: (e) => setTripForm({ ...tripForm, price: Number(e.target.value) }), placeholder: "Price" },
+          ]}
+          onSubmit={() => postData("http://localhost:8080/trips/", tripForm, () => setTripForm({ trainId: 0, departureStationId: 0, arrivalStationId: 0, departureTime: "", arrivalTime: "", price: 0 }))}
+        />
+        <Table data={trips} onDelete={(id) => deleteData(`http://localhost:8080/trips/${id}`)} />
+      </Section>
+
+      <Section title="Employees">
+        <Form
+          inputs={[
+            { value: employeeForm.firstName, onChange: (e) => setEmployeeForm({ ...employeeForm, firstName: e.target.value }), placeholder: "First Name" },
+            { value: employeeForm.lastName, onChange: (e) => setEmployeeForm({ ...employeeForm, lastName: e.target.value }), placeholder: "Last Name" },
+            { value: employeeForm.age, onChange: (e) => setEmployeeForm({ ...employeeForm, age: Number(e.target.value) }), placeholder: "Age" },
+            { value: employeeForm.gender, onChange: (e) => setEmployeeForm({ ...employeeForm, gender: e.target.value }), placeholder: "Gender" },
+            { value: employeeForm.phoneNumber, onChange: (e) => setEmployeeForm({ ...employeeForm, phoneNumber: e.target.value }), placeholder: "Phone Number" },
+            { value: employeeForm.address, onChange: (e) => setEmployeeForm({ ...employeeForm, address: e.target.value }), placeholder: "Address" },
+          ]}
+          onSubmit={() => postData("http://localhost:8080/employees/", employeeForm, () => setEmployeeForm({ firstName: "", lastName: "", age: 0, gender: "MALE", phoneNumber: "", address: "" }))}
+        />
+        <Table data={employees} onDelete={(id) => deleteData(`http://localhost:8080/employees/${id}`)} />
+      </Section>
+
+      <Section title="Trains">
+        <Table data={trains} onDelete={null} />
+      </Section>
     </div>
   );
 };
 
-export default Admin;
+const Section = ({ title, children }) => (
+  <section className="space-y-4">
+    <h2 className="text-2xl font-bold text-gray-800">{title}</h2>
+    {children}
+  </section>
+);
+
+const Form = ({ inputs, onSubmit }) => (
+  <form
+    onSubmit={(e) => {
+      e.preventDefault();
+      onSubmit();
+    }}
+    className="space-y-2 mb-6"
+  >
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      {inputs.map((input, idx) => (
+        <input
+          key={idx}
+          value={input.value}
+          onChange={input.onChange}
+          placeholder={input.placeholder}
+          className="p-2 border rounded"
+          required
+        />
+      ))}
+    </div>
+    <button
+      type="submit"
+      className="mt-2 bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
+    >
+      Submit
+    </button>
+  </form>
+);
+
+const Table = ({ data, onDelete }) => {
+  if (!Array.isArray(data) || data.length === 0) return <p className="text-gray-500">No data found.</p>;
+
+  const headers = Object.keys(data[0]);
+
+  return (
+    <table className="min-w-full table-auto border border-gray-300">
+      <thead className="bg-gray-100">
+        <tr>
+          {headers.map((h, i) => (
+            <th key={i} className="p-2 border text-left capitalize">{h}</th>
+          ))}
+          {onDelete && <th className="p-2 border text-center">Actions</th>}
+        </tr>
+      </thead>
+      <tbody>
+        {data.map((item, idx) => (
+          <tr key={idx} className="hover:bg-gray-50">
+            {headers.map((h, i) => (
+              <td key={i} className="p-2 border">{item[h]}</td>
+            ))}
+            {onDelete && (
+              <td className="p-2 border text-center">
+                <button
+                  onClick={() => onDelete(item.id)}
+                  className="text-red-600 hover:underline"
+                >
+                  Delete
+                </button>
+              </td>
+            )}
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  );
+};
+
+export default AdminPanel;

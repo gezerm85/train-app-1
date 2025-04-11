@@ -33,13 +33,13 @@ const AppContent = () => {
     // Yalnızca ana sayfadaysa yönlendir
     if (token && location.pathname === "/") {
       switch (role) {
-        case "admin":
+        case "ADMIN":
           navigate("/admin");
           break;
-        case "manager":
-          navigate("/managerPanel");
-          break;
         case "user":
+          navigate("/user");
+          break;
+     
         default:
           navigate("/user");
       }
