@@ -1,0 +1,144 @@
+/* Login.css */
+
+/* Body ve Genel Arka Plan */
+body {
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(to right, #2193b0, #6dd5ed);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Navbar Styles */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 30px;
+  background: white !important;
+  color: black !important;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.navbar-logo {
+  font-size: 24px;
+  font-weight: 600;
+  color: black !important;
+}
+
+.navbar-links {
+  display: flex;
+  gap: 20px;
+  /* margin-right: 40px;  İstersen kaldır veya azalt. */
+}
+
+/* Mobilde nav linkleri taşarsa wrap yap */
+@media (max-width: 600px) {
+  .navbar-links {
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+  .navbar-links a {
+    margin-right: 10px;
+    font-size: 14px;
+  }
+}
+
+/* Login Wrapper (Container'ı ortalamak için) */
+.login-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: calc(100vh - 70px);
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+/* Login Container Styles */
+.login-container {
+  width: 100%;              /* DÜZELTİLDİ: mobilde taşmayı engeller */
+  max-width: 400px;         /* Geniş ekranda max 400px */
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 30px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  text-align: center;
+}
+
+.login-container h2 {
+  margin-bottom: 20px;
+  font-size: 24px;
+  color: #333;
+  font-weight: 600;
+}
+
+.login-container p {
+  margin-bottom: 20px;
+  color: #777;
+  font-size: 14px;
+}
+
+.error {
+  color: #ff4d4d;
+  margin-bottom: 15px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.login-container form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.login-container input {
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: border-color 0.3s ease;
+}
+
+.login-container input:focus {
+  border-color: #2193b0;
+  outline: none;
+  box-shadow: 0 0 5px rgba(33, 147, 176, 0.5);
+}
+
+.login-container button {
+  padding: 12px;
+  background: linear-gradient(to right, #2193b0, #6dd5ed);
+  border: none;
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.login-container button:hover {
+  background: linear-gradient(to right, #00c6ff, #4facfe);
+  transform: translateY(-2px);
+}
+
+.login-container button:active {
+  transform: translateY(0);
+}
+
+/* Additional Links */
+.login-links {
+  margin-top: 15px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.login-links a {
+  color: #2193b0;
+  text-decoration: none;
+  font-size: 14px;
+  transition: color 0.3s ease;
+}
+
+.login-links a:hover {
+  color: #00c6ff;
+}

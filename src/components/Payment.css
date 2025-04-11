@@ -1,0 +1,80 @@
+/* Payment.css */
+
+.payment-container {
+  /* width: 100vw; height: 100vh;  KALDIRILDI */
+  width: 100%;
+  min-height: 100vh;
+  background: linear-gradient(to right, #2193b0, #6dd5ed);
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header kapladığı yer kadar offset */
+.payment-content {
+  margin-top: 60px;
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 16px 0; /* Alt-üst boşluk */
+}
+
+.payment-box {
+  width: 100%;
+  max-width: 400px;
+  background: #fff;
+  border-radius: 8px;
+  padding: 30px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+  text-align: left;
+  font-family: sans-serif;
+  margin-bottom: 20px; /* Biraz alt boşluk */
+}
+
+.payment-box h2 {
+  margin-bottom: 20px;
+  color: #333;
+  text-align: center;
+}
+
+.payment-box form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.payment-box label {
+  font-weight: bold;
+  color: #555;
+}
+
+.payment-box input,
+.payment-box select {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.expiry-row {
+  display: flex;
+  gap: 20px;
+  /* Dar ekranda alt alta istersen:
+    @media (max-width: 500px) {
+      flex-direction: column;
+    }
+  */
+}
+
+.pay-button {
+  margin-top: 10px;
+  padding: 12px;
+  background: #4facfe;
+  border: none;
+  color: #fff;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.pay-button:hover {
+  background: #00c6ff;
+}

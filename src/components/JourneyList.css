@@ -1,0 +1,134 @@
+/* JourneyList.css */
+.journey-list-container {
+  /* width: 100vw; height: 100vh;  KALDIRILDI */
+  width: 100%;                 /* DÜZELTİLDİ */
+  min-height: 100vh;           /* DÜZELTİLDİ */
+  background: linear-gradient(to right, #2193b0, #6dd5ed);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  /* overflow-y: auto;  Devam edebilir, ama ister kaldır */
+  /* overflow-x: hidden; (geçici çözüm - layout düzeltildiği için gerek yok) */
+}
+
+.journey-list-content {
+  margin-top: 80px;
+  text-align: center;
+  padding: 20px;
+  color: #fff;
+  max-width: 1200px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.journey-list-content h2 {
+  margin-bottom: 30px;
+  font-size: 32px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.days-row {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 40px;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.day-button {
+  background: rgba(255, 255, 255, 0.9);
+  color: #333;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.3s ease, color 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.day-button:hover {
+  background: rgba(255, 255, 255, 1);
+  transform: translateY(-2px);
+}
+
+.active-day {
+  background: #e60000;
+  color: #fff;
+  box-shadow: 0 4px 8px rgba(230, 0, 0, 0.3);
+}
+
+/* Sefer kartları yatay */
+.journey-cards {
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+  flex-wrap: wrap;
+  padding: 20px;
+}
+
+.journey-card {
+  width: 240px;
+  background: rgba(255, 255, 255, 0.95);
+  color: #333;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  text-align: left;
+}
+
+.journey-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+}
+
+.journey-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.time-range {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.dep-time,
+.arr-time {
+  font-weight: 700;
+  font-size: 18px;
+}
+
+.arrow {
+  font-size: 28px;
+  color: #888;
+}
+
+.journey-sub {
+  display: flex;
+  flex-direction: column;
+  font-size: 14px;
+  gap: 6px;
+  margin-bottom: 12px;
+  color: #555;
+}
+
+.journey-price {
+  font-weight: 700;
+  font-size: 18px;
+  color: #e60000;
+}
+
+/* Responsive Düzen */
+@media (max-width: 768px) {
+  .journey-card {
+    width: 90%;
+    max-width: 300px; /* istersen */
+  }
+}

@@ -1,0 +1,20 @@
+/* UserHome.css */
+
+.userhome-container {
+  /* width: 100vw; height: 100vh;  KALDIRILDI */
+  width: 100%;                   /* DÜZELTİLDİ */
+  min-height: 100vh;             /* DÜZELTİLDİ */
+  background: linear-gradient(to right, #2193b0, #6dd5ed);
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+.main-content {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 20px;
+  padding: 0 16px;              
+}

@@ -1,0 +1,150 @@
+/* JourneyDetail.css */
+
+.journey-detail-container {
+  /* width: 100vw;  height: 110vh;  margin-right: 200px;  KALDIRILDI */
+  width: 100%;              /* DÜZELTİLDİ */
+  min-height: 100vh;        /* DÜZELTİLDİ */
+  background: linear-gradient(to right, #2193b0, #6dd5ed);
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;           /* Ortala, istersen padding ekleyebilirsin */
+  padding: 0 16px;          /* Kenarlardan biraz boşluk */
+  box-sizing: border-box;
+}
+
+.detail-content {
+  margin-top: 60px;         /* Header var */
+  display: flex;
+  flex-wrap: wrap;          /* Dar ekranda alt alta geçebilir */
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 40px;
+  padding: 20px;
+  color: #333;
+  box-sizing: border-box;
+}
+
+/* Sol taraf: Yolculuk bilgileri */
+.detail-info {
+  flex: 1;
+  max-width: 300px;
+  line-height: 1.6;
+  padding: 20px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.detail-info h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
+  color: #333;
+}
+.detail-info p {
+  margin: 6px 0;
+  font-size: 16px;
+  color: #555;
+}
+
+/* Sağ taraf: Oturma yerleri */
+.seat-map {
+  flex: 2;
+  text-align: center;
+  padding: 20px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.seat-map h3 {
+  margin-bottom: 20px;
+  font-size: 18px;
+  color: #333;
+}
+
+/* Tüm satırları içeren kapsayıcı */
+.seat-rows-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 0 auto;
+}
+
+/* Her satır */
+.seat-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+}
+
+/* Koltuk grubu (2 koltuk) */
+.seat-group {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+
+/* Koridor */
+.corridor {
+  width: 40px;
+  height: 1px;
+}
+
+/* Koltuk şekli */
+.seat {
+  width: 50px;
+  height: 50px;
+  background: #909290;
+  border-radius: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+/* Dolu koltuklar */
+.seat.occupied {
+  background: #FF5252;
+  cursor: not-allowed;
+}
+
+/* Seçili koltuk */
+.seat.selected {
+  background: linear-gradient(to right, #2193b0, #6dd5ed);
+  color: #fff;
+}
+
+.action-buttons {
+  margin-top: 20px;
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.action-buttons button {
+  padding: 10px 20px;
+  background: linear-gradient(to right, #2193b0, #6dd5ed);
+  border: none;
+  color: #fff;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.action-buttons button:hover {
+  background: #00c6ff;
+}
+
+/* Responsive Önerisi */
+@media (max-width: 768px) {
+  .detail-content {
+    flex-direction: column; /* Alt alta sıralansın */
+    align-items: center;
+  }
+  .detail-info,
+  .seat-map {
+    max-width: 100%; 
+  }
+}

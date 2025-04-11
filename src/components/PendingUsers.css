@@ -1,0 +1,133 @@
+/* PendingUsers.css */
+
+/* Navbar Stilleri */
+.navbar {
+  background-color: #79c2d0;
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+.navbar-brand {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #000000;
+}
+
+.navbar-links {
+  display: flex;
+  gap: 20px;
+}
+
+.navbar-links a {
+  color: #000000;
+  text-decoration: none;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.navbar-links a:hover {
+  color: #5aa5b3;
+}
+
+.logout {
+  color: #ff4d4d;
+}
+
+.logout:hover {
+  color: #cc0000;
+}
+
+/* Pending Users Container */
+.pending-users-container {
+  max-width: 1200px;
+  margin: 100px auto 20px auto;  /* Biraz üst boşluk (navbar) */
+  padding: 20px;
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  text-align: center;
+  color: #000000;
+  margin-bottom: 40px;
+}
+
+/* Tablolar */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+th, td {
+  padding: 12px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+th {
+  background-color: #79c2d0;
+  color: #000000;
+}
+
+td {
+  background-color: #f9f9f9;
+}
+
+tr:nth-child(even) td {
+  background-color: #f0f0f0;
+}
+
+/* Butonlar */
+button {
+  margin: 5px;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: #79c2d0;
+  color: #000000;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  display: inline-block;
+  width: auto;
+}
+
+button:hover {
+  background-color: #5aa5b3;
+  transform: translateY(-2px);
+}
+
+/* Admin Paneline Dönüş Butonu */
+.back-to-admin-button {
+  display: block;
+  margin: 20px 0 0;
+  padding: 10px 20px;
+  background-color: #79c2d0;
+  color: #000000;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.back-to-admin-button:hover {
+  background-color: #5aa5b3;
+  transform: translateY(-2px);
+}
+
+/* Responsive Düzen */
+@media (max-width: 768px) {
+  .pending-users-container {
+    margin: 80px auto 20px;
+    padding: 10px;
+  }
+  table, th, td {
+    font-size: 14px;
+  }
+}

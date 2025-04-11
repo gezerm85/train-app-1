@@ -1,0 +1,139 @@
+/* TicketEdit.css */
+
+/* Navbar Stilleri */
+.navbar {
+  background-color: #ffffff;
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+.navbar-brand {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #000000;
+}
+
+.navbar-links {
+  display: flex;
+  gap: 20px;
+}
+
+.navbar-links a {
+  color: #000000;
+  text-decoration: none;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.navbar-links a:hover {
+  color: #5aa5b3;
+}
+
+.logout {
+  color: #ff4d4d;
+}
+
+.logout:hover {
+  color: #cc0000;
+}
+
+/* Ticket Edit Container */
+.ticket-edit-container {
+  max-width: 1200px;
+  margin: 100px auto 20px auto; 
+  padding: 20px;
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+h1, h2 {
+  text-align: center;
+  color: #000000;
+}
+
+/* Tablolar */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+th, td {
+  padding: 12px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+th {
+  background-color: #79c2d0;
+  color: #000000;
+}
+
+td {
+  background-color: #f9f9f9;
+}
+
+tr:nth-child(even) td {
+  background-color: #f0f0f0;
+}
+
+button {
+  margin: 5px;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: #79c2d0;
+  color: #000000;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+button:hover {
+  background-color: #5aa5b3;
+  transform: translateY(-2px);
+}
+
+/* Düzenleme Formu */
+.ticket-edit-container div {
+  margin-top: 20px;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+}
+
+.ticket-edit-container label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+}
+
+.ticket-edit-container input {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 16px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+.ticket-edit-container button {
+  margin-right: 10px;
+}
+
+/* Responsive Düzenleme */
+@media (max-width: 768px) {
+  .ticket-edit-container {
+    margin: 80px auto 20px;
+    padding: 10px;
+  }
+  table, th, td {
+    font-size: 14px;
+  }
+}

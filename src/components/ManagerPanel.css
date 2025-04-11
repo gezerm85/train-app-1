@@ -1,0 +1,172 @@
+/* ManagerPanel.css */
+
+/* Ana container */
+.manager-dashboard-container {
+  /* width: 100vw; KALDIRILDI */
+  width: 100%;
+  min-height: 100vh;
+  background: linear-gradient(to right, #2193b0, #6dd5ed);
+  display: flex;
+  flex-direction: column;
+  color: #fff;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* İçerik */
+.manager-content {
+  margin-top: 60px;
+  padding: 20px;
+}
+
+/* Özet Kartlar */
+.summary-cards {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.card {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 12px;
+  padding: 25px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  flex: 1;
+  text-align: center;
+  color: #333;
+  min-width: 250px;
+  max-width: 300px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+}
+.card h3 {
+  margin-bottom: 15px;
+  font-size: 20px;
+  color: #2193b0;
+}
+.card p {
+  font-size: 18px;
+  font-weight: bold;
+  margin: 0;
+}
+
+/* Yan yana grafikler */
+.chart-row {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 30px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.chart-section {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 12px;
+  padding: 25px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  color: #333;
+  width: 100%;
+  max-width: 400px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.chart-section:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+}
+.chart-section h3 {
+  margin-bottom: 20px;
+  font-size: 20px;
+  color: #2193b0;
+}
+
+/* Upcoming, Hire, Employee list - sabit margin yerine max-width yaklaşımı */
+.upcoming-section,
+.hire-form,
+.employee-list {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 12px;
+  padding: 25px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  color: #333;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  margin: 0 auto;         /* Ortala */
+  max-width: 800px;       /* Ekran genişleyince 800px'i aşma */
+  margin-bottom: 30px;
+}
+.upcoming-section:hover,
+.hire-form:hover,
+.employee-list:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+}
+.upcoming-section h3,
+.hire-form h3,
+.employee-list h2 {
+  margin-bottom: 20px;
+  font-size: 20px;
+  color: #2193b0;
+}
+.upcoming-section ul,
+.employee-list ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.upcoming-section li,
+.employee-list li {
+  margin: 10px 0;
+  font-size: 16px;
+}
+
+/* Form stili (Hire) */
+.hire-form form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+.hire-form input,
+.hire-form select {
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background: #fff;
+  color: #333;
+  font-size: 14px;
+  transition: border-color 0.3s ease;
+}
+.hire-form input:focus,
+.hire-form select:focus {
+  border-color: #2193b0;
+}
+.hire-form button {
+  padding: 12px;
+  background: #4facfe;
+  border: none;
+  color: white;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+.hire-form button:hover {
+  background: #00c6ff;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .manager-content {
+    padding: 10px;
+  }
+  .upcoming-section,
+  .hire-form,
+  .employee-list {
+    max-width: 95%;
+    margin: 0 auto 20px;
+  }
+}

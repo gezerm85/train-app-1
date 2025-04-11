@@ -1,0 +1,172 @@
+/* TrainEdit.css */
+
+/* Navbar Stilleri */
+.navbar {
+  background-color: #79c2d0;
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 10;
+}
+
+.navbar-brand {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #000000;
+}
+
+.navbar-links {
+  display: flex;
+  gap: 20px;
+}
+
+.navbar-links a {
+  color: #000000;
+  text-decoration: none;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.navbar-links a:hover {
+  color: #5aa5b3;
+}
+
+.logout {
+  color: #ff4d4d;
+  margin-right: 40px;
+}
+
+.logout:hover {
+  color: #cc0000;
+}
+
+/* Train Edit Container */
+.train-edit-container {
+  max-width: 1200px;
+  margin: 100px auto 20px auto;
+  padding: 20px;
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  text-align: center;
+  color: #000000;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+button {
+  margin: 5px;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: #79c2d0;
+  color: #000000;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+button:hover {
+  background-color: #5aa5b3;
+  transform: translateY(-2px);
+}
+
+/* Yeni eklenen tren listesi için stiller */
+.train-list-container {
+  max-width: 1500px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.train-list-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.train-list-table th,
+.train-list-table td {
+  padding: 12px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+.train-list-table th {
+  background-color: #79c2d0;
+  color: #000000;
+  text-align: center;
+}
+
+.train-list-table td {
+  background-color: #f9f9f9;
+  text-align: center;
+}
+
+.train-list-table tr:nth-child(even) td {
+  background-color: #f0f0f0;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 5px;
+  justify-content: center;
+}
+
+/* Admin Paneline Dönüş Butonu */
+.back-to-admin-button {
+  display: block;
+  margin: 20px 0 0;
+  padding: 10px 20px;
+  background-color: #79c2d0;
+  color: #000000;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.back-to-admin-button:hover {
+  background-color: #5aa5b3;
+  transform: translateY(-2px);
+}
+
+/* Responsive Düzenleme */
+@media (max-width: 768px) {
+  .train-edit-container {
+    margin-top: 80px;
+    padding: 10px;
+  }
+  .train-list-container {
+    margin: 10px auto;
+    padding: 10px;
+  }
+}
