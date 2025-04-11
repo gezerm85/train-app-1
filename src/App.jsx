@@ -54,6 +54,7 @@ const AppContent = () => {
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (!token) return;
+  
     fetch("http://localhost:8080/users/profile", {
       headers: {
         "Content-Type": "application/json",
@@ -66,14 +67,27 @@ const AppContent = () => {
       })
       .then((data) => {
         localStorage.setItem("role", data.role);
-        if (data.role === "ADMIN") {
-          navigate("/admin");
-        } else if (data.role === "USER") {
+  
+        // 🔒 Sadece giriş yaptıktan sonra ana sayfadaysan yönlendir
+        if (location.pathname === "/") {
+          if (data.role === "ADMIN") {
+            navigate("/admin");
+          } else if (data.role === "USER") {
+            navigate("/user");
+          }
+        }
+  
+        // 🔒 Yetkisiz kullanıcıyı yönlendir
+        if (location.pathname.startsWith("/admin") && data.role !== "ADMIN") {
           navigate("/user");
+        }
+        if (location.pathname.startsWith("/user") && data.role !== "USER") {
+          navigate("/admin");
         }
       })
       .catch((err) => console.error("Error:", err));
-  }, [navigate]);
+  }, [navigate, location.pathname]);
+  
 
   const handleLogout = () => {
     localStorage.removeItem("token");

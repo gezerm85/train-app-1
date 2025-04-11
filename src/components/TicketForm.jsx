@@ -1,3 +1,4 @@
+// src/components/TicketForm.jsx
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./TicketForm.css";
@@ -19,52 +20,45 @@ const TicketForm = () => {
       return;
     }
     // Search Journey -> /journey-list
-    navigate("/journey-list", {
-      state: {
-        from,
-        to,
-        departureDate,
-        returnDate,
-        passengerCount,
-        tripType,
-      },
-    });
-    
-  };
-
-  const swapLocations = () => {
-    const temp = from;
-    setFrom(to);
-    setTo(temp);
+    navigate("/journey-list");
   };
 
   const renderTicketForm = () => (
     <form onSubmit={handleSubmit} className="ticket-form">
-      <div className="location-inputs">
-        <input
-          list="cityList"
-          type="text"
-          placeholder="From"
-          value={from}
-          onChange={(e) => setFrom(e.target.value)}
-          required
-        />
-        <span className="swap-icon" onClick={swapLocations}>⇆</span> {/* 🟢 Artık tıklanabilir */}
-        <input
-          list="cityList"
-          type="text"
-          placeholder="To"
-          value={to}
-          onChange={(e) => setTo(e.target.value)}
-          required
-        />
-        <datalist id="cityList">
-          <option value="Istanbul" />
-          <option value="Ankara" />
-          <option value="Konya" />
-          <option value="Eskisehir" />
-        </datalist>
-      </div>
+<div className="location-inputs">
+  {/* 🏙️ 'From' Şehir Seçimi */}
+  <select
+    value={from}
+    onChange={(e) => setFrom(e.target.value)}
+    required
+  >
+    <option value="" disabled>
+      Select Departure City
+    </option>
+    <option value="Istanbul">Istanbul</option>
+    <option value="Ankara">Ankara</option>
+    <option value="Konya">Konya</option>
+    <option value="Eskisehir">Eskisehir</option>
+  </select>
+
+  <span className="swap-icon">⇆</span>
+
+  {/* 🏙️ 'To' Şehir Seçimi */}
+  <select
+    value={to}
+    onChange={(e) => setTo(e.target.value)}
+    required
+  >
+    <option value="" disabled>
+      Select Arrival City
+    </option>
+    <option value="Istanbul">Istanbul</option>
+    <option value="Ankara">Ankara</option>
+    <option value="Konya">Konya</option>
+    <option value="Eskisehir">Eskisehir</option>
+  </select>
+</div>
+
 
       <div className="date-section">
         <label>Departure Date</label>
@@ -109,10 +103,18 @@ const TicketForm = () => {
     <div className="mock-ticket">
       <h3>My Tickets</h3>
       <div className="ticket-info">
-        <p><strong>From:</strong> Istanbul</p>
-        <p><strong>To:</strong> Ankara</p>
-        <p><strong>Departure Date:</strong> 2025-03-15</p>
-        <p><strong>Passengers:</strong> 1</p>
+        <p>
+          <strong>From:</strong> Istanbul
+        </p>
+        <p>
+          <strong>To:</strong> Ankara
+        </p>
+        <p>
+          <strong>Departure Date:</strong> 2025-03-15
+        </p>
+        <p>
+          <strong>Passengers:</strong> 1
+        </p>
       </div>
     </div>
   );

@@ -55,9 +55,6 @@ const Login = () => {
         case "admin":
           navigate("/admin");
           break;
-        case "manager":
-          navigate("/managerPanel");
-          break;
         case "user":
         default:
           navigate("/user");
